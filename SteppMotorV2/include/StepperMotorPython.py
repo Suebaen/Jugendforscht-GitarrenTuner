@@ -37,7 +37,7 @@ my_mic = s_r.Microphone(device_index=1)
 print(my_mic)
 
 def DasBLESignal_Rechts():
-    bluethooth.write(b"F")
+    bluethooth.write(b"N")
     input_data = bluethooth.readline()
     print(input_data.decode())
 
@@ -205,7 +205,7 @@ while stream.is_active():
         print(A)
         # A2 += 1
         # if (A1 == WieOftDieFlascheNoteGepsieltWerdenDamitSieEinSiganlAbgiebt):
-        DasBLESignal_Links() 
+        DasBLESignal_Links() #BLE Signal
     else:
         A += 1
         print('Super das ist ein Perfektes A')
@@ -237,7 +237,7 @@ while stream.is_active():
         print (gegen)
         # A2R += 1
         # if (A2R == WieOftDieFlascheNoteGepsieltWerdenDamitSieEinSiganlAbgiebt):
-        DasBLESignal_Links() 
+        DasBLESignal_Links() #BLE Signal
         # sleep(DieZeit)
     else:
         B += 1
@@ -264,7 +264,7 @@ while stream.is_active():
         print (gegen)
         # C2 += 1
         # if (C2 == WieOftDieFlascheNoteGepsieltWerdenDamitSieEinSiganlAbgiebt):
-        DasBLESignal_Links() 
+        DasBLESignal_Links() #BLE Signal
         # #sleep(DieZeit)
     else:
         C += 1
@@ -292,7 +292,7 @@ while stream.is_active():
 
         C2R += 1
         if (C2R == WieOftDieFlascheNoteGepsieltWerdenDamitSieEinSiganlAbgiebt):
-            DasBLESignal_Links() 
+            DasBLESignal_Links() #BLE Signal
         # #sleep(DieZeit)
         
     else:
@@ -319,7 +319,7 @@ while stream.is_active():
         # von hier muss das BLE Signal gesendet werden
         D2 += 1
         if (D2 == WieOftDieFlascheNoteGepsieltWerdenDamitSieEinSiganlAbgiebt):
-            DasBLESignal_Links() 
+            DasBLESignal_Links() #BLE Signal
         # #sleep(DieZeit)
     else:
         E += 1
@@ -346,7 +346,7 @@ while stream.is_active():
         # von hier muss das BLE Signal gesendet werden
         D2R += 1
         if (D2R == WieOftDieFlascheNoteGepsieltWerdenDamitSieEinSiganlAbgiebt):
-            DasBLESignal_Links() 
+            DasBLESignal_Links() #BLE Signal
         # #sleep(DieZeit)
     else:
         F += 1
@@ -397,7 +397,7 @@ while stream.is_active():
         # von hier muss das BLE Signal gesendet werden
         G2 += 1
         if (G2 == WieOftDieFlascheNoteGepsieltWerdenDamitSieEinSiganlAbgiebt):
-            DasBLESignal_Links() 
+            DasBLESignal_Links() #BLE Signal
         # #sleep(DieZeit)
     else:
         H += 1

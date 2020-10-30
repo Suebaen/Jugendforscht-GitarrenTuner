@@ -57,6 +57,14 @@ void loop() {
         Serial.println("clockwise");
         delay(warten);
       }
+         if (String(inData)=="FN"){
+        Serial.println(inData);
+        Stepper1.step(steps);
+        Serial.print("steps:");
+        Serial.println("clockwise");
+        delay(warten);
+      }
+
         if (String(inData)=="NNNNNN"){
         Serial.println(inData);
         Stepper1.step(steps);
@@ -186,7 +194,7 @@ if (String(inData)=="FF"){
 
         delay(warten);
       }
- 
+
 if (String(inData)=="FFFFF"){
         Serial.println(inData);
         Stepper1.step(-steps);
