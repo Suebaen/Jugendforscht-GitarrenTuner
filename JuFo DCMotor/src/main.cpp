@@ -17,7 +17,7 @@ char inChar=-1;
 int count=0;
 int i = 0;
 int winkel = 90;
-int warten = 0;
+int warten = 100;
 int UmWievielSichDerServoDrehenSOll = 200;
 int first_bytes;
 int remainf_bytes=0;
@@ -145,7 +145,7 @@ void loop() {
         Serial.println("clockwise");
         delay(warten);
       } 
-         if (String(inData)=="AAA"){
+         if (String(inData)=="ABA"){
         Serial.println(inData);
         digitalWrite(Richtung1, HIGH);
         digitalWrite(Richtung2, LOW);
@@ -153,6 +153,16 @@ void loop() {
         Serial.println("clockwise");
         delay(warten);
       } 
+
+       if (String(inData)=="AAA"){
+        Serial.println(inData);
+        digitalWrite(Richtung1, HIGH);
+        digitalWrite(Richtung2, LOW);
+        Serial.print("steps:");
+        Serial.println("clockwise");
+        delay(warten);
+      } 
+
 
         if (String(inData)=="AAAAAAA"){
         Serial.println(inData);
