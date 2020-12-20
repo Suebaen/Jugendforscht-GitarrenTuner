@@ -1,15 +1,33 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
-int enablePin = 4;
-int RichtungEins = 5;
-int ReichtungZwei = 6;
 
-int pin11 = 7;
-int Richtung1 = 8;
-int Richtung2 = 9;
+// Motor für das G
+int MotorG_R = 2;
+int MotorG_L = 3;
 
-SoftwareSerial serial_connection(2, 3);
+// Motor für das F
+int MotorF_R = 4;
+int MotorF_L = 5;
+
+// Motor für das A
+int MotorA_L = 6;
+int MotorA_R = 7;
+
+// Motor für das C
+int MotorC_L = 8;
+int MotorC_R = 9;
+
+// Motor für das D
+int MotorD_R = 10;
+int MotorD_L = 11;
+
+// Motor für das E
+int MotorE_R = 12;
+int MotorE_L = 13;
+
+
+SoftwareSerial serial_connection(0, 1);
 #define BUFFER_SIZE 64
 const int stepsPerRevolution = 50;
 char inData[BUFFER_SIZE];
@@ -50,242 +68,440 @@ void loop() {
        Serial.println(first_bytes); 
       }
       inData[i]='\0';
-        // Motor 1
+        
+      // Motor für das F
       if (String(inData)=="N"){
         Serial.println(inData);
-        digitalWrite(RichtungEins, HIGH);
-        digitalWrite(ReichtungZwei, LOW);
+        digitalWrite(MotorF_R, HIGH);
+        digitalWrite(MotorF_L, LOW);
         Serial.print("steps:");
         Serial.println("clockwise");
         delay(warten);
       } 
 
- if (String(inData)=="NNN"){
+      if (String(inData)=="NNN"){
         Serial.println(inData);
-      digitalWrite(RichtungEins, HIGH);
-        digitalWrite(ReichtungZwei, LOW);
+      digitalWrite(MotorF_R, HIGH);
+        digitalWrite(MotorF_L, LOW);
         Serial.print("steps:");
         Serial.println("clockwise");
         delay(warten);
       } 
 
- if (String(inData)=="NNNN"){
+      if (String(inData)=="NNNN"){
         Serial.println(inData);
-      digitalWrite(RichtungEins, HIGH);
-        digitalWrite(ReichtungZwei, LOW);
-        Serial.print("steps:");
-        Serial.println("clockwise");
-        delay(warten);
-      } 
-         if (String(inData)=="FN"){
-        Serial.println(inData);
-      digitalWrite(RichtungEins, HIGH);
-        digitalWrite(ReichtungZwei, LOW);
+      digitalWrite(MotorF_R, HIGH);
+        digitalWrite(MotorF_L, LOW);
         Serial.print("steps:");
         Serial.println("clockwise");
         delay(warten);
       } 
 
-         if (String(inData)=="NFN"){
+      if (String(inData)=="FN"){
         Serial.println(inData);
-      digitalWrite(RichtungEins, HIGH);
-        digitalWrite(ReichtungZwei, LOW);
+      digitalWrite(MotorF_R, HIGH);
+        digitalWrite(MotorF_L, LOW);
         Serial.print("steps:");
         Serial.println("clockwise");
         delay(warten);
       } 
 
-        if (String(inData)=="NNNNNN"){
+      if (String(inData)=="NFN"){
         Serial.println(inData);
-      digitalWrite(RichtungEins, HIGH);
-        digitalWrite(ReichtungZwei, LOW);
+      digitalWrite(MotorF_R, HIGH);
+        digitalWrite(MotorF_L, LOW);
         Serial.print("steps:");
         Serial.println("clockwise");
         delay(warten);
       } 
+
+      if (String(inData)=="NNNNNN"){
+        Serial.println(inData);
+      digitalWrite(MotorF_R, HIGH);
+        digitalWrite(MotorF_L, LOW);
+        Serial.print("steps:");
+        Serial.println("clockwise");
+        delay(warten);
+      } 
+
       if (String(inData)=="F"){
         Serial.println(inData);
-        digitalWrite(RichtungEins, LOW);
-        digitalWrite(ReichtungZwei, HIGH);
+        digitalWrite(MotorF_R, LOW);
+        digitalWrite(MotorF_L, HIGH);
         Serial.print("steps:");
         Serial.println("counterclockwise");
         delay(warten);
       } 
       
-        if (String(inData)=="FF"){
-        digitalWrite(RichtungEins, LOW);
-        digitalWrite(ReichtungZwei, HIGH);
-        Serial.print("steps:");
-        Serial.println("counterclockwise");
-        delay(warten);
-      } 
-      if (String(inData)=="FFF"){
-        digitalWrite(RichtungEins, LOW);
-        digitalWrite(ReichtungZwei, HIGH);
+      if (String(inData)=="FF"){
+        digitalWrite(MotorF_R, LOW);
+        digitalWrite(MotorF_L, HIGH);
         Serial.print("steps:");
         Serial.println("counterclockwise");
         delay(warten);
       } 
 
-//     // Motor 2
+      if (String(inData)=="FFF"){
+        digitalWrite(MotorF_R, LOW);
+        digitalWrite(MotorF_L, HIGH);
+        Serial.print("steps:");
+        Serial.println("counterclockwise");
+        delay(warten);
+      } 
+
+      // Motor für das A
       if (String(inData)=="A"){
         Serial.println(inData);
-        digitalWrite(Richtung1, HIGH);
-        digitalWrite(Richtung2, LOW);
+        digitalWrite(MotorA_L, HIGH);
+        digitalWrite(MotorA_R, LOW);
         Serial.print("steps:");
         Serial.println("clockwise");
         delay(warten);
       } 
 
- if (String(inData)=="AA"){
+      if (String(inData)=="AA"){
         Serial.println(inData);
-        digitalWrite(Richtung1, HIGH);
-        digitalWrite(Richtung2, LOW);
-        Serial.print("steps:");
-        Serial.println("clockwise");
-        delay(warten);
-      } 
-         if (String(inData)=="ABA"){
-        Serial.println(inData);
-        digitalWrite(Richtung1, HIGH);
-        digitalWrite(Richtung2, LOW);
+        digitalWrite(MotorA_L, HIGH);
+        digitalWrite(MotorA_R, LOW);
         Serial.print("steps:");
         Serial.println("clockwise");
         delay(warten);
       } 
 
-       if (String(inData)=="AAA"){
+      if (String(inData)=="ABA"){
         Serial.println(inData);
-        digitalWrite(Richtung1, HIGH);
-        digitalWrite(Richtung2, LOW);
+        digitalWrite(MotorA_L, HIGH);
+        digitalWrite(MotorA_R, LOW);
         Serial.print("steps:");
         Serial.println("clockwise");
         delay(warten);
       } 
 
-
-        if (String(inData)=="AAAAAAA"){
+      if (String(inData)=="AAA"){
         Serial.println(inData);
-        digitalWrite(Richtung1, HIGH);
-        digitalWrite(Richtung2, LOW);
+        digitalWrite(MotorA_L, HIGH);
+        digitalWrite(MotorA_R, LOW);
         Serial.print("steps:");
         Serial.println("clockwise");
         delay(warten);
       } 
+
+      if (String(inData)=="AAAAAAA"){
+        Serial.println(inData);
+        digitalWrite(MotorA_L, HIGH);
+        digitalWrite(MotorA_R, LOW);
+        Serial.print("steps:");
+        Serial.println("clockwise");
+        delay(warten);
+      } 
+
       if (String(inData)=="B"){
         Serial.println(inData);
-        digitalWrite(Richtung1, LOW);
-        digitalWrite(Richtung2, HIGH);
+        digitalWrite(MotorA_L, LOW);
+        digitalWrite(MotorA_R, HIGH);
         Serial.print("steps:");
         Serial.println("counterclockwise");
         delay(warten);
       } 
       
-        if (String(inData)=="BB"){
-        digitalWrite(Richtung1, LOW);
-        digitalWrite(Richtung2, HIGH);
+      if (String(inData)=="BB"){
+        digitalWrite(MotorA_L, LOW);
+        digitalWrite(MotorA_R, HIGH);
         Serial.print("steps:");
         Serial.println("counterclockwise");
         delay(warten);
       } 
+
       if (String(inData)=="BBB"){
-        digitalWrite(Richtung1, LOW);
-        digitalWrite(Richtung2, HIGH);
+        digitalWrite(MotorA_L, LOW);
+        digitalWrite(MotorA_R, HIGH);
         Serial.print("steps:");
         Serial.println("counterclockwise");
         delay(warten);
-      } 
-       if (String(inData)=="BBBB"){
-        digitalWrite(Richtung1, LOW);
-        digitalWrite(Richtung2, HIGH);
+      }
+
+      if (String(inData)=="BBBB"){
+        digitalWrite(MotorA_L, LOW);
+        digitalWrite(MotorA_R, HIGH);
         Serial.print("steps:");
         Serial.println("counterclockwise");
         delay(warten);
       } 
 
 
-      if (String(inData)=="P"){
-        digitalWrite(Richtung1, LOW);
-        digitalWrite(Richtung2, LOW);
-        Serial.print("steps:");
-        Serial.println("counterclockwise");
-        delay(warten);
-      } 
-// Motor 3
+      // Motor für das C
       if (String(inData)=="C"){
         Serial.println(inData);
-      digitalWrite(RichtungEins, HIGH);
-        digitalWrite(ReichtungZwei, LOW);
+      digitalWrite(MotorF_R, HIGH);
+        digitalWrite(MotorF_L, LOW);
         Serial.print("steps:");
         Serial.println("clockwise");
         delay(warten);
       } 
 
- if (String(inData)=="CC"){
+      if (String(inData)=="CC"){
         Serial.println(inData);
-        digitalWrite(RichtungEins, HIGH);
-        digitalWrite(ReichtungZwei, LOW);
-        Serial.print("steps:");
-        Serial.println("clockwise");
-        delay(warten);
-      } 
-         if (String(inData)=="CCC"){
-        Serial.println(inData);
-        digitalWrite(RichtungEins, HIGH);
-        digitalWrite(ReichtungZwei, LOW);
+        digitalWrite(MotorF_R, HIGH);
+        digitalWrite(MotorF_L, LOW);
         Serial.print("steps:");
         Serial.println("clockwise");
         delay(warten);
       } 
 
-        if (String(inData)=="CCCC"){
+      if (String(inData)=="CCC"){
         Serial.println(inData);
-        digitalWrite(RichtungEins, HIGH);
-        digitalWrite(ReichtungZwei, LOW);
+        digitalWrite(MotorF_R, HIGH);
+        digitalWrite(MotorF_L, LOW);
         Serial.print("steps:");
         Serial.println("clockwise");
         delay(warten);
       } 
-      if (String(inData)=="D"){
+
+      if (String(inData)=="CCCC"){
         Serial.println(inData);
-        digitalWrite(RichtungEins, LOW);
-        digitalWrite(ReichtungZwei, HIGH);
+        digitalWrite(MotorF_R, HIGH);
+        digitalWrite(MotorF_L, LOW);
+        Serial.print("steps:");
+        Serial.println("clockwise");
+        delay(warten);
+      } 
+
+      if (String(inData)=="L"){
+        Serial.println(inData);
+        digitalWrite(MotorF_R, LOW);
+        digitalWrite(MotorF_L, HIGH);
         Serial.print("steps:");
         Serial.println("counterclockwise");
         delay(warten);
       } 
       
-        if (String(inData)=="DD"){
-        digitalWrite(RichtungEins, LOW);
-        digitalWrite(ReichtungZwei, HIGH);
+      if (String(inData)=="LL"){
+        digitalWrite(MotorF_R, LOW);
+        digitalWrite(MotorF_L, HIGH);
         Serial.print("steps:");
         Serial.println("counterclockwise");
         delay(warten);
       } 
-      if (String(inData)=="DDD"){
-        digitalWrite(RichtungEins, LOW);
-        digitalWrite(ReichtungZwei, HIGH);
+
+      if (String(inData)=="LLL"){
+        digitalWrite(MotorF_R, LOW);
+        digitalWrite(MotorF_L, HIGH);
         Serial.print("steps:");
         Serial.println("counterclockwise");
         delay(warten);
       } 
-       if (String(inData)=="DDDD"){
-        digitalWrite(RichtungEins, LOW);
-        digitalWrite(ReichtungZwei, HIGH);
+
+      if (String(inData)=="LLLL"){
+        digitalWrite(MotorF_R, LOW);
+        digitalWrite(MotorF_L, HIGH);
         Serial.print("steps:");
         Serial.println("counterclockwise");
         delay(warten);
       } 
+      
+      //Motor für das G 
+      if (String(inData)=="G"){
+        digitalWrite(MotorG_R, HIGH);
+        digitalWrite(MotorG_L, LOW);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if (String(inData)=="GG"){
+        digitalWrite(MotorG_R, HIGH);
+        digitalWrite(MotorG_L, LOW);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if (String(inData)=="GGG"){
+        digitalWrite(MotorG_R, HIGH);
+        digitalWrite(MotorG_L, LOW);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if (String(inData)=="GGGG"){
+        digitalWrite(MotorG_R, HIGH);
+        digitalWrite(MotorG_L, LOW);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if (String(inData)=="K"){
+        digitalWrite(MotorG_R, LOW);
+        digitalWrite(MotorG_L, HIGH);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if (String(inData)=="KK"){
+        digitalWrite(MotorG_R, LOW);
+        digitalWrite(MotorG_L, HIGH);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if (String(inData)=="KKK"){ //das KKK steht NICHT for den Ku-Klux-Klan
+        digitalWrite(MotorG_R, LOW);
+        digitalWrite(MotorG_L, HIGH);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if (String(inData)=="KKKK"){
+        digitalWrite(MotorG_R, LOW);
+        digitalWrite(MotorG_L, HIGH);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      //Motor für das E
+      if(String(inData)=="E"){
+        digitalWrite(MotorE_R, HIGH);
+        digitalWrite(MotorE_L, LOW);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if(String(inData)=="EE"){
+        digitalWrite(MotorE_R, HIGH);
+        digitalWrite(MotorE_L, LOW);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if(String(inData)=="EEE"){
+        digitalWrite(MotorE_R, HIGH);
+        digitalWrite(MotorE_L, LOW);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if(String(inData)=="EEEE"){
+        digitalWrite(MotorE_R, HIGH);
+        digitalWrite(MotorE_L, LOW);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if(String(inData)=="Q"){
+        digitalWrite(MotorE_R, LOW);
+        digitalWrite(MotorE_L, HIGH);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if(String(inData)=="QQ"){
+        digitalWrite(MotorE_R, LOW);
+        digitalWrite(MotorE_L, HIGH);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if(String(inData)=="QQQ"){
+        digitalWrite(MotorE_R, LOW);
+        digitalWrite(MotorE_L, HIGH);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if(String(inData)=="QQQQ"){
+        digitalWrite(MotorE_R, LOW);
+        digitalWrite(MotorE_L, HIGH);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      //Motr für das D
+      if(String(inData)=="D"){
+        digitalWrite(MotorD_R, HIGH);
+        digitalWrite(MotorD_L, LOW);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if(String(inData)=="D"){
+        digitalWrite(MotorD_R, HIGH);
+        digitalWrite(MotorD_L, LOW);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if(String(inData)=="DD"){
+        digitalWrite(MotorD_R, HIGH);
+        digitalWrite(MotorD_L, LOW);
+        Serial.print("steps:");
+        delay(warten);
+      }
+      
+      if(String(inData)=="DDD"){
+        digitalWrite(MotorD_R, HIGH);
+        digitalWrite(MotorD_L, LOW);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if(String(inData)=="U"){
+        digitalWrite(MotorD_R, LOW);
+        digitalWrite(MotorD_L, HIGH);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if(String(inData)=="UU"){
+        digitalWrite(MotorD_R, LOW);
+        digitalWrite(MotorD_L, HIGH);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
+      if(String(inData)=="UUU"){
+        digitalWrite(MotorD_R, LOW);
+        digitalWrite(MotorD_L, HIGH);
+        Serial.print("steps:");
+        delay(warten);
+      }
+
       for ( i = 0; i < remainf_bytes; i++){
         inChar=serial_connection.read();
       }
       
+//das hier ist der Notfall Stop der eigentlich nie verwedet werden muss
+
+      // if (String(inData)=="P"){
+      //   digitalWrite(MotorA_L, LOW);
+      //   digitalWrite(MotorA_R, LOW);
+      //   Serial.print("steps:");
+      //   Serial.println("counterclockwise");
+      //   delay(warten);
+      // } 
       Serial.println(inData);
       Serial.println(inData);
-      digitalWrite(RichtungEins, LOW);
-      digitalWrite(ReichtungZwei, LOW);
-      digitalWrite(Richtung1, LOW);
-      digitalWrite(Richtung2, LOW);
+
+// F aus
+      digitalWrite(MotorF_R, LOW);
+      digitalWrite(MotorF_L, LOW);
+
+// A aus
+      digitalWrite(MotorA_L, LOW);
+      digitalWrite(MotorA_R, LOW);
+
+// D aus
+      digitalWrite(MotorD_L, LOW);
+      digitalWrite(MotorD_R, LOW);
+
+// E aus
+      digitalWrite(MotorE_L, LOW);
+      digitalWrite(MotorE_R, LOW);
+
+// C aus
+      digitalWrite(MotorC_L, LOW);
+      digitalWrite(MotorC_R, LOW);
+
+// G aus
+      digitalWrite(MotorG_L, LOW);
+      digitalWrite(MotorG_R, LOW);
     }
         
 }
