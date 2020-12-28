@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
-
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
 
 // Motor für das G
 int MotorG_R = 2;
@@ -28,6 +29,8 @@ int MotorE_L = 13;
 
 
 SoftwareSerial serial_connection(0, 1);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
 #define BUFFER_SIZE 64
 const int stepsPerRevolution = 50;
 char inData[BUFFER_SIZE];
@@ -43,11 +46,23 @@ byte byte_count;
 int stepCount = 0; 
 int steps = 3;
 
+
+// das sind die Wichtigsten Funfktionen für das LCD_Display
+void Bildschirm() {
+  lcd.begin();
+  lcd.backlight();
+  lcd.noBacklight();
+  lcd.setCursor(0, 1); // damit kann man den Cursor setzten
+  lcd.print("das ist ein test"); // das ist nur ein Test
+  lcd.clear();
+}
+
 void setup() {
   Serial.begin(9600);
   serial_connection.begin(9600);
   serial_connection.println("Ready!!");
   Serial.println("Started");
+  Bildschirm();
   }
 
 void loop() {
