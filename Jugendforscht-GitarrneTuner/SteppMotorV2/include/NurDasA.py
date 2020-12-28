@@ -102,7 +102,7 @@ def note_to_fftbin(n): return number_to_freq(n)/FREQ_STEP
 imin = max(0, int(np.floor(note_to_fftbin(NOTE_MIN-1))))
 imax = min(SAMPLES_PER_FFT, int(np.ceil(note_to_fftbin(NOTE_MAX+1))))
 
-# Allocate space to run an FFT. 
+
 buf = np.zeros(SAMPLES_PER_FFT, dtype=np.float32)
 num_frames = 0
 
@@ -122,7 +122,7 @@ print ('sampling at', FSAMP, 'Hz with max resolution of', FREQ_STEP, 'Hz')
 
 while stream.is_active():
 
-    # Shift the buffer down and new data in
+
     buf[:-FRAME_SIZE] = buf[FRAME_SIZE:]
     buf[-FRAME_SIZE:] = np.fromstring(stream.read(FRAME_SIZE, exception_on_overflow = False), np.int16)
 
@@ -140,8 +140,7 @@ while stream.is_active():
     
     pyaudio.get_portaudio_version()
 
-    # auf 5 Kommastellen begrenzen
-    # freq = float("{0:.5f}".format(freq))
+ 
 
     if num_frames >= FRAMES_PER_FFT:
         print ('freq: {:9.4f} Hz     note: {:>3s} {:+.2f}'.format(
