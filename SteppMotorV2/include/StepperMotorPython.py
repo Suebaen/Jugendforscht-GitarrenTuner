@@ -1,13 +1,5 @@
 #! /usr/bin/env python
-######################################################################
-# tuner.py - a minimal command-line guitar/ukulele tuner in Python.
-# Requires numpy and pyaudio.
-######################################################################
-# Author:  Matt Zucker
-# Date:    July 2016
-# License: Creative Commons Attribution-ShareAlike 3.0
-#          https://creativecommons.org/licenses/by-sa/3.0/us/
-######################################################################
+
 import numpy as np
 import sys
 import pyaudio
@@ -103,11 +95,7 @@ FSAMP = 22050       # Sampling frequency in Hz
 FRAME_SIZE = 2048   # Wie viele samples pro frame 
 FRAMES_PER_FFT = 16 # FFT takes average across how many frames?
 
-######################################################################
-# Derived quantities from constants above. Note that as
-# SAMPLES_PER_FFT goes up, the frequency step size decreases (so
-# resolution increases); however, it will incur more delay to process
-# new sounds.
+
 
 SAMPLES_PER_FFT = FRAME_SIZE*FRAMES_PER_FFT
 FREQ_STEP = float(FSAMP)/SAMPLES_PER_FFT
@@ -126,10 +114,7 @@ def number_to_freq(n): return 440 * 2.0**((n-69)/12.0)
 def note_name(n): return NOTE_NAMES[n % 12] + str(n/12 - 1)
 
 ######################################################################
-# Ok, ready to go now.
 
-# Get min/max index within FFT of notes we care about.
-# See docs for numpy.rfftfreq()
 def note_to_fftbin(n): return number_to_freq(n)/FREQ_STEP
 imin = max(0, int(np.floor(note_to_fftbin(NOTE_MIN-1))))
 imax = min(SAMPLES_PER_FFT, int(np.ceil(note_to_fftbin(NOTE_MAX+1))))
@@ -171,7 +156,6 @@ while stream.is_active():
     n = freq_to_number(freq)
     n0 = int(round(n))
 
-    # Console output once we have a full buffer
     num_frames += 1
     
     pyaudio.get_portaudio_version()

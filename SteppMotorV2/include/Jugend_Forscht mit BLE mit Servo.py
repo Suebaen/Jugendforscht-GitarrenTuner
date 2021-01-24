@@ -1,13 +1,5 @@
 #! /usr/bin/env python
-######################################################################
-# tuner.py - a minimal command-line guitar/ukulele tuner in Python.
-# Requires numpy and pyaudio.
-######################################################################
-# Author:  Matt Zucker
-# Date:    July 2016
-# License: Creative Commons Attribution-ShareAlike 3.0
-#          https://creativecommons.org/licenses/by-sa/3.0/us/
-######################################################################
+
 import numpy as np
 import sys
 import pyaudio
@@ -165,7 +157,6 @@ while stream.is_active():
     n = freq_to_number(freq)
     n0 = int(round(n))
 
-    # Console output once we have a full buffer
     num_frames += 1
     
     pyaudio.get_portaudio_version()
