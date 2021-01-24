@@ -7,7 +7,7 @@
 
 SoftwareSerial serial_connection(2, 3);
 #define BUFFER_SIZE 64
-const int stepsPerRevolution = 2000;
+const int stepsPerRevolution = 200000000000;
 Stepper Stepper1(stepsPerRevolution, 4, 5, 6, 7);
 char inData[BUFFER_SIZE];
 char inChar=-1;
@@ -35,58 +35,55 @@ void setup() {
 void loop() {
     byte_count=serial_connection.available();
    
-    if (byte_count)
-    {
+    if (byte_count){
       Serial.println("Incoming Data");
       first_bytes=byte_count;
       remainf_bytes=0;
-      if (first_bytes>=BUFFER_SIZE-1)
-      {
+      if (first_bytes>=BUFFER_SIZE-1){
         remainf_bytes=byte_count-(BUFFER_SIZE-1);
-
       }
       
-      for (i = 0; i < first_bytes; i++) 
-      {
+      for (i = 0; i < first_bytes; i++){
         inChar=serial_connection.read();
         inData[i]=inChar;
        Serial.println(first_bytes); 
       }
       inData[i]='\0';
       
-      if (String(inData)=="N")
-      {
+      if (String(inData)=="N"){
         Serial.println(inData);
-        winkel += UmWievielSichDerServoDrehenSOll;
-        // Stepper1.step(steps);
+        Stepper1.step(steps);
         Serial.print("steps:");
         Serial.println(stepCount);
         Serial.println("clockwise");
         Stepper1.step(stepsPerRevolution);
- 
+        stepCount++;
         delay(warten);
-        Serial.println(winkel);
       }
-      if (String(inData)=="F")
-      {
+      if (String(inData)=="F"){
         Serial.println(inData);
-        // Stepper1.step(steps);
+        Stepper1.step(steps);
         Serial.print("steps:");
         Serial.println("counterclockwise");
         Stepper1.step(-stepsPerRevolution);
+        stepCount--;
         delay(warten);
-        Serial.println(winkel);
       }
-      for ( i = 0; i < remainf_bytes; i++)
-      {
+      
+      if (String(inData)=="FFFFFFFFF"){
+        Serial.println(inData);
+        Stepper1.step(steps);
+        Serial.print("steps:");
+        Serial.println("counterclockwise");
+        Stepper1.step(-stepsPerRevolution);
+        stepCount--;
+        delay(warten);
+      }
+      for ( i = 0; i < remainf_bytes; i++){
         inChar=serial_connection.read();
       }
       
       Serial.println(inData);
       Serial.println(inData);
-      // serial_connection.print("Hellp from Blue "+String(count));
-      // count++;
     }
- 
-    // delay(warten);
 }
