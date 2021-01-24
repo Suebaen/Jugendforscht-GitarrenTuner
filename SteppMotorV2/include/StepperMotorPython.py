@@ -1,6 +1,13 @@
 #! /usr/bin/env python
 ######################################################################
-
+# tuner.py - a minimal command-line guitar/ukulele tuner in Python.
+# Requires numpy and pyaudio.
+######################################################################
+# Author:  Matt Zucker
+# Date:    July 2016
+# License: Creative Commons Attribution-ShareAlike 3.0
+#          https://creativecommons.org/licenses/by-sa/3.0/us/
+######################################################################
 import numpy as np
 import sys
 import pyaudio
@@ -15,6 +22,7 @@ import speech_recognition as s_r
 
 print("Start")
 port= "/dev/tty.HC-05-SPPDev"   #dev/tty.HC-05-SPPDev  tty.Bluetooth-Incoming-Port
+# bluethooth= serial.Serial(port, 115200) # 9600) 115200
 
 bluethooth = serial.Serial(port, 38400, timeout=0, parity=serial.PARITY_EVEN, rtscts=1)#38400
 print ("connectied")
@@ -92,29 +100,39 @@ G2R = 0
 NOTE_MIN = 60       # C4
 NOTE_MAX = 69       # A4
 FSAMP = 22050       # Sampling frequency in Hz
-FRAME_SIZE = 2048   # How many samples per frame?  
+FRAME_SIZE = 2048   # Wie viele samples pro frame 
 FRAMES_PER_FFT = 16 # FFT takes average across how many frames?
 
-
+######################################################################
+# Derived quantities from constants above. Note that as
+# SAMPLES_PER_FFT goes up, the frequency step size decreases (so
+# resolution increases); however, it will incur more delay to process
+# new sounds.
 
 SAMPLES_PER_FFT = FRAME_SIZE*FRAMES_PER_FFT
 FREQ_STEP = float(FSAMP)/SAMPLES_PER_FFT
 
+######################################################################
 
 
 NOTE_NAMES = 'C C# D D# E F F# G G# A A# B'.split()
 
+######################################################################
 
+# https://newt.phys.unsw.edu.au/jw/notes.html
 
 def freq_to_number(f): return 69 + 12*np.log2(f/440.0)
 def number_to_freq(n): return 440 * 2.0**((n-69)/12.0)
 def note_name(n): return NOTE_NAMES[n % 12] + str(n/12 - 1)
 
+######################################################################
+# Ok, ready to go now.
 
+# Get min/max index within FFT of notes we care about.
+# See docs for numpy.rfftfreq()
 def note_to_fftbin(n): return number_to_freq(n)/FREQ_STEP
 imin = max(0, int(np.floor(note_to_fftbin(NOTE_MIN-1))))
 imax = min(SAMPLES_PER_FFT, int(np.ceil(note_to_fftbin(NOTE_MAX+1))))
-
 
 buf = np.zeros(SAMPLES_PER_FFT, dtype=np.float32) # Ursprügnlich war stand da ... .float32 (mit float16 gieng alles gut)
 num_frames = 0
@@ -140,16 +158,16 @@ print
 
 while stream.is_active():
 
-
+   
     buf[:-FRAME_SIZE] = buf[FRAME_SIZE:]
     buf[-FRAME_SIZE:] = np.fromstring(stream.read(FRAME_SIZE, exception_on_overflow = False), np.int16)
 
-    # Run the FFT on the windowed buffer
+    
     fft = np.fft.rfft(buf * window)
 
-    # Get frequency of maximum response in range
     freq = (np.abs(fft[imin:imax]).argmax() + imin) * FREQ_STEP
-
+    #sleep(DieZeit)
+    
     n = freq_to_number(freq)
     n0 = int(round(n))
 
@@ -158,7 +176,8 @@ while stream.is_active():
     
     pyaudio.get_portaudio_version()
 
- 
+    # auf 5 Kommastellen begrenzen
+    # freq = float("{0:.5f}".format(freq))
 
     if num_frames >= FRAMES_PER_FFT:
         print ('freq: {:9.4f} Hz     note: {:>3s} {:+.2f}'.format(
@@ -465,8 +484,3 @@ while stream.is_active():
 
 
 
-
-
-
-     
-             
