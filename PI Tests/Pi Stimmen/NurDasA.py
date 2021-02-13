@@ -6,14 +6,31 @@ import sys
 import pyaudio
 import serial
 import speech_recognition as s_r
+import RPi.GPIO as GPIO          
+from time import sleep
 
 
 def TonA():
+
     r = s_r.Recognizer()
     my_mic = s_r.Microphone(device_index=1)
     print(my_mic)
 
 
+
+
+    in1 = 24
+    in2 = 23
+    en = 25
+    temp1=1
+
+    # GPIO.setmode(GPIO.BCM)
+    GPIO.setup(in1,GPIO.OUT)
+    GPIO.setup(in2,GPIO.OUT)
+    # GPIO.setup(en,GPIO.OUT)
+    GPIO.output(in1,GPIO.LOW)
+    GPIO.output(in2,GPIO.LOW)
+    # p=GPIO.PWM(en,1000)
 
     Das_ist_ein_A4 = ('A4.75', 0.003337767668014635)
     Das_ist_ein_A2 = ('E4.333333333333333', 0.005231129721877892)
@@ -132,22 +149,30 @@ def TonA():
     #  A4  
 
         if  (note_name(n0), n-n0) < (Das_ist_ein_A4):
-            
+            GPIO.output(in1,GPIO.LOW)
+            GPIO.output(in2,GPIO.HIGH)
+            print("backward")
             print (mit)
+            
             print(A)
 
             
         elif (note_name(n0), n-n0) > (Das_ist_ein_A4):
             print (gegen)
+            if(temp1==1):
+             GPIO.output(in1,GPIO.HIGH)
+             GPIO.output(in2,GPIO.LOW)
             print(A)
 
         else:
             A += 1
             print('Super das ist ein Perfektes A')
+
             print(A)
 
         if A <= PerfekteNote:
             print (note_name(n0), n-n0)
+            
             print(A)
 
         else:
@@ -159,11 +184,17 @@ def TonA():
         if  (note_name(n0), n-n0) < (Das_ist_ein_A2):
             
             print (mit)
+            if(temp1==1):
+             GPIO.output(in1,GPIO.LOW)
+             GPIO.output(in2,GPIO.HIGH)
             print(A)
 
             
         elif (note_name(n0), n-n0) > (Das_ist_ein_A2):
             print (gegen)
+            if(temp1==1):
+             GPIO.output(in1,GPIO.HIGH)
+             GPIO.output(in2,GPIO.LOW)
             print(A)
             
         else:

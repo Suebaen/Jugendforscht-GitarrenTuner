@@ -30,12 +30,13 @@ while (True):
         sleep (0.1)
         print("Knopf 1\n")
         print("Willst du ein A(Button1) oder ein D (Button2)Stimmen?\n")
-        if (GPIO.input(11)== True):
-            print("Jetzt wird das A gestimmt")
-            TonA()
-        if (GPIO.input(15)==True):
-            print("Jetzt wird das D gestimmt")
-            TonD()  
+        TonA()
+        # if (GPIO.input(11)== True):
+        #     print("Jetzt wird das A gestimmt")
+        #     TonA()
+        # if (GPIO.input(15)==True):
+        #     print("Jetzt wird das D gestimmt")
+        #     TonD()  
         
         # super()
 
@@ -47,12 +48,13 @@ while (True):
         sleep (0.1)
         print("Knopf 2\n")
         print("Willst du ein C (Button1) oder ein E (Button2)Stimmen?\n")
-        if (GPIO.input(11)== True):
-            print("Jetzt wird das C gestimmt")
-            TonC()
-        if (GPIO.input(15)==True):
-            print("Jetzt wird das E gestimmt")
-            TonE()
+        TonC()
+        # if (GPIO.input(11)== True):
+        #     print("Jetzt wird das C gestimmt")
+        #     TonC()
+        # if (GPIO.input(15)==True):
+        #     print("Jetzt wird das E gestimmt")
+        #     TonE()
 
 #Kopf3        
     else:
@@ -62,12 +64,13 @@ while (True):
         sleep (0.1)
         print("Knopf 3\n")
         print("Willst du ein F(Button1) oder ein G (Button2)Stimmen?\n")
-        if (GPIO.input(11)== True):
-            print("Jetzt wird das F gestimmt")
-            TonF()
-        if (GPIO.input(15)==True):
-            print("Jetzt wird das G gestimmt")
-            TonG()
+        TonD()
+        # if (GPIO.input(11)== True):
+        #     print("Jetzt wird das F gestimmt")
+        #     TonF()
+        # if (GPIO.input(15)==True):
+        #     print("Jetzt wird das G gestimmt")
+        #     TonG()
         
   
     else:

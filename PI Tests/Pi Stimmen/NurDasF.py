@@ -4,12 +4,23 @@
 import numpy as np
 import pyaudio
 import speech_recognition as s_r
-
+import RPi.GPIO as GPIO          
+from time import sleep
 def TonF():
 
     r = s_r.Recognizer()
     my_mic = s_r.Microphone(device_index=1)
     print(my_mic)
+
+    in1 = 24
+    in2 = 23
+    temp1=1
+    
+
+    GPIO.setup(in1,GPIO.OUT)
+    GPIO.setup(in2,GPIO.OUT)
+    GPIO.output(in1,GPIO.LOW)
+    GPIO.output(in2,GPIO.LOW)
 
 
 
@@ -140,9 +151,16 @@ def TonF():
 
         if  (note_name(n0), n-n0) < (Das_ist_ein_F4):
             print (mit)
+            if(temp1==1):
+             GPIO.output(in1,GPIO.HIGH)
+             GPIO.output(in2,GPIO.LOW)
 
         elif (note_name(n0), n-n0) > (Das_ist_ein_F4):
             print (gegen)
+            if(temp1==1):
+             GPIO.output(in1,GPIO.LOW)
+             GPIO.output(in2,GPIO.HIGH)
+           
 
         else:
             H += 1
@@ -158,9 +176,15 @@ def TonF():
 
         if  (note_name(n0), n-n0) < (Das_ist_ein_F2):
             print (mit)
+            if(temp1==1):
+             GPIO.output(in1,GPIO.HIGH)
+             GPIO.output(in2,GPIO.LOW)
 
         elif (note_name(n0), n-n0) > (Das_ist_ein_F2):
             print (gegen)
+            if(temp1==1):
+             GPIO.output(in1,GPIO.LOW)
+             GPIO.output(in2,GPIO.HIGH)
 
         else:
             H += 1

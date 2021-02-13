@@ -6,12 +6,25 @@ import sys
 import pyaudio
 import serial
 import speech_recognition as s_r
+import RPi.GPIO as GPIO          
+from time import sleep
 
 def TonC():
 
     r = s_r.Recognizer()
     my_mic = s_r.Microphone(device_index=1)
     print(my_mic)
+
+
+    in1 = 21
+    in2 = 12
+    temp1=1
+    
+
+    GPIO.setup(in1,GPIO.OUT)
+    GPIO.setup(in2,GPIO.OUT)
+    GPIO.output(in1,GPIO.LOW)
+    GPIO.output(in2,GPIO.LOW)
 
     Das_ist_ein_C4 = ('C4.', 0 -0.08014706457605314)
     Das_ist_ein_C2 = ('E4.333333333333333', -0.13667409503960215)
@@ -133,18 +146,25 @@ def TonC():
                 freq, note_name(n0), n-n0))
 
         
-    # #  A4#
+    # #  C4#
     
         if  (note_name(n0), n-n0) < (Das_ist_ein_C4):
             print (mit)
+            if(temp1==1):
+             GPIO.output(in1,GPIO.HIGH)
+             GPIO.output(in2,GPIO.LOW)
+
 
     
         elif (note_name(n0), n-n0) > (Das_ist_ein_C4):
             print (gegen)
+            if(temp1==1):
+             GPIO.output(in1,GPIO.LOW)
+             GPIO.output(in2,GPIO.HIGH)
 
         else:
             B += 1
-            print('Super das ist ein Perfektes A#')
+            print('Super das ist ein Perfektes C#')
         
         if B <= PerfekteNote:
             print (note_name(n0), n-n0)
@@ -155,19 +175,26 @@ def TonC():
 
 
         
-    # #  A4#
+    # #  C2
     
         if  (note_name(n0), n-n0) < (Das_ist_ein_C2):
             print (mit)
+            if(temp1==1):
+             GPIO.output(in1,GPIO.HIGH)
+             GPIO.output(in2,GPIO.LOW)
+
 
     
         elif (note_name(n0), n-n0) > (Das_ist_ein_C2):
             print (gegen)
+            if(temp1==1):
+             GPIO.output(in1,GPIO.LOW)
+             GPIO.output(in2,GPIO.HIGH)
 
 
         else:
             B += 1
-            print('Super das ist ein Perfektes A#')
+            print('Super das ist ein Perfektes C#')
         
         if B <= PerfekteNote:
             print (note_name(n0), n-n0)
