@@ -75,7 +75,7 @@ def TonE():
 
     NOTE_MIN = 60       # C4
     NOTE_MAX = 69       # A4
-    FSAMP = 22050       # Sampling frequency in Hz
+    FSAMP = 48000      # Sampling frequency in Hz
     FRAME_SIZE = 2048   # How many samples per frame?  
     FRAMES_PER_FFT = 16 # FFT takes average across how many frames?
 

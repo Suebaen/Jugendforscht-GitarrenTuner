@@ -8,7 +8,7 @@ from NurDasE import *
 from NurDasF import *
 from NurDasG import *
 from test2 import *
-import _portaudio as pa
+
 
 
 
@@ -19,11 +19,13 @@ GPIO.setup(11,GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 GPIO.setup(13,GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 GPIO.setup(15,GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 GPIO.setmode(GPIO.BOARD)
-
-        
+y = input()
+if y == 'A':
+    TonA()
 
 
 while (True):
+
 
 #Kopf1    
     if(GPIO.input(11)== True):

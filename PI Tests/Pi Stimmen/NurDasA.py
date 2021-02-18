@@ -2,9 +2,8 @@
 #########################################################
 
 import numpy as np
-import sys
+from numpy.lib import index_tricks
 import pyaudio
-import serial
 import speech_recognition as s_r
 import RPi.GPIO as GPIO          
 from time import sleep
@@ -13,7 +12,7 @@ from time import sleep
 def TonA():
 
     r = s_r.Recognizer()
-    my_mic = s_r.Microphone(device_index=1)
+    my_mic = s_r.Microphone(device_index=0)# in die Klammer (device_index=0)
     print(my_mic)
 
 
@@ -81,7 +80,7 @@ def TonA():
 
     NOTE_MIN = 60       # C4
     NOTE_MAX = 69       # A4
-    FSAMP = 22050       # Sampling frequency in Hz
+    FSAMP = 48000 #22050       # Sampling frequency in Hz
     FRAME_SIZE = 2048   # How many samples per frame?  
     FRAMES_PER_FFT = 16 # FFT takes average across how many frames?
 
@@ -208,3 +207,6 @@ def TonA():
 
         else:
             break 
+
+
+
