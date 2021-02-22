@@ -9,7 +9,7 @@ import speech_recognition as s_r
 import RPi.GPIO as GPIO          
 from time import sleep
 
-def TonC():
+def TonC3():
 
     r = s_r.Recognizer()
     my_mic = s_r.Microphone(device_index= 0)
@@ -26,8 +26,8 @@ def TonC():
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.LOW)
 
-    Das_ist_ein_C4 = ('C4.0', 0.1348820182590984)
-    Das_ist_ein_C2 = ('E4.333333333333333', -0.13667409503960215)
+    Das_ist_ein_C3 = ('G4.583333333333333', -0.10396591168272096)
+    
 
 
     gegen = "gegen den Uhrzeiger"
@@ -146,9 +146,9 @@ def TonC():
                 freq, note_name(n0), n-n0))
 
         
-    # #  C4#
+    # #  C3
     
-        if  (note_name(n0), n-n0) < (Das_ist_ein_C4):
+        if  (note_name(n0), n-n0) < (Das_ist_ein_C3):
             print (mit)
             if(temp1==1):
              GPIO.output(in1,GPIO.HIGH)
@@ -156,7 +156,7 @@ def TonC():
 
 
     
-        elif (note_name(n0), n-n0) > (Das_ist_ein_C4):
+        elif (note_name(n0), n-n0) > (Das_ist_ein_C3):
             print (gegen)
             if(temp1==1):
              GPIO.output(in1,GPIO.LOW)
@@ -164,7 +164,7 @@ def TonC():
 
         else:
             B += 1
-            print('Super das ist ein Perfektes C#')
+            print('Super das ist ein Perfektes C3')
         
         if B <= PerfekteNote:
             print (note_name(n0), n-n0)
@@ -172,33 +172,3 @@ def TonC():
 
         else:
             break    
-
-
-        
-    # #  C2
-    
-        if  (note_name(n0), n-n0) < (Das_ist_ein_C2):
-            print (mit)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.HIGH)
-             GPIO.output(in2,GPIO.LOW)
-
-
-    
-        elif (note_name(n0), n-n0) > (Das_ist_ein_C2):
-            print (gegen)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.LOW)
-             GPIO.output(in2,GPIO.HIGH)
-
-
-        else:
-            B += 1
-            print('Super das ist ein Perfektes C#')
-        
-        if B <= PerfekteNote:
-            print (note_name(n0), n-n0)
-            print(B)
-
-        else:
-            break  

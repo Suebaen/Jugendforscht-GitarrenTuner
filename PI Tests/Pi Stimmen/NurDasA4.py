@@ -2,32 +2,39 @@
 #########################################################
 
 import numpy as np
-import sys
+from numpy.lib import index_tricks
 import pyaudio
-import serial
 import speech_recognition as s_r
 import RPi.GPIO as GPIO          
 from time import sleep
 
-def TonC():
+
+
+def TonA4():
 
     r = s_r.Recognizer()
-    my_mic = s_r.Microphone(device_index= 0)
+    my_mic = s_r.Microphone(device_index=0)# in die Klammer (device_index=0)
     print(my_mic)
 
 
-    in1 = 21
-    in2 = 12
-    temp1=1
-    
 
+
+    in1 = 16
+    in2 = 18
+    en = 25
+    temp1=1
+
+    # GPIO.setmode(GPIO.BCM)
     GPIO.setup(in1,GPIO.OUT)
     GPIO.setup(in2,GPIO.OUT)
+    # GPIO.setup(en,GPIO.OUT)
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.LOW)
+    # p=GPIO.PWM(en,1000)
 
-    Das_ist_ein_C4 = ('C4.0', 0.1348820182590984)
-    Das_ist_ein_C2 = ('E4.333333333333333', -0.13667409503960215)
+    Das_ist_ein_A4 = ('A4.75', -0.021530851746419444)
+    
+
 
 
     gegen = "gegen den Uhrzeiger"
@@ -74,15 +81,12 @@ def TonC():
 
     NOTE_MIN = 60       # C4
     NOTE_MAX = 69       # A4
-    FSAMP = 48000      # Sampling frequency in Hz
+    FSAMP = 48000 #22050       # Sampling frequency in Hz
     FRAME_SIZE = 2048   # How many samples per frame?  
     FRAMES_PER_FFT = 16 # FFT takes average across how many frames?
 
-
-
     SAMPLES_PER_FFT = FRAME_SIZE*FRAMES_PER_FFT
     FREQ_STEP = float(FSAMP)/SAMPLES_PER_FFT
-
 
 
     NOTE_NAMES = 'C C# D D# E F F# G G# A A# B'.split()
@@ -99,7 +103,7 @@ def TonC():
     imax = min(SAMPLES_PER_FFT, int(np.ceil(note_to_fftbin(NOTE_MAX+1))))
 
 
-    buf = np.zeros(SAMPLES_PER_FFT, dtype=np.float32) # Ursprügnlich war stand da ... .float32 (mit float16 gieng alles gut)
+    buf = np.zeros(SAMPLES_PER_FFT, dtype=np.float32)
     num_frames = 0
 
     # Initialize audio
@@ -111,10 +115,7 @@ def TonC():
 
 
     freq1 = 440.08
-
     window = 0.5 * (1 - np.cos(np.linspace(0, 2*np.pi, SAMPLES_PER_FFT, False)))
-
-    # Print initial text
     print ('sampling at', FSAMP, 'Hz with max resolution of', FREQ_STEP, 'Hz')
 
 
@@ -130,7 +131,7 @@ def TonC():
 
         # Get frequency of maximum response in range
         freq = (np.abs(fft[imin:imax]).argmax() + imin) * FREQ_STEP
-
+        # Get note number and nearest note
         n = freq_to_number(freq)
         n0 = int(round(n))
 
@@ -144,61 +145,43 @@ def TonC():
         if num_frames >= FRAMES_PER_FFT:
             print ('freq: {:9.4f} Hz     note: {:>3s} {:+.2f}'.format(
                 freq, note_name(n0), n-n0))
-
         
-    # #  C4#
-    
-        if  (note_name(n0), n-n0) < (Das_ist_ein_C4):
+    #  A4  
+
+        if  (note_name(n0), n-n0) < (Das_ist_ein_A4):
+            GPIO.output(in1,GPIO.LOW)
+            GPIO.output(in2,GPIO.HIGH)
+            print("backward")
             print (mit)
+            
+            print(A)
+
+            
+        elif (note_name(n0), n-n0) > (Das_ist_ein_A4):
+            print (gegen)
             if(temp1==1):
              GPIO.output(in1,GPIO.HIGH)
              GPIO.output(in2,GPIO.LOW)
-
-
-    
-        elif (note_name(n0), n-n0) > (Das_ist_ein_C4):
-            print (gegen)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.LOW)
-             GPIO.output(in2,GPIO.HIGH)
+            print(A)
 
         else:
-            B += 1
-            print('Super das ist ein Perfektes C#')
-        
-        if B <= PerfekteNote:
+            A += 1
+            if(temp1==1):
+             GPIO.output(in1,GPIO.LOW)
+             GPIO.output(in2,GPIO.LOW)
+             GPIO.cleanup()
+            print('Super das ist ein Perfektes A')
+            # Stimmen()
+            print(A)
+
+        if A <= PerfekteNote:
             print (note_name(n0), n-n0)
-            print(B)
+            
+            print(A)
 
         else:
             break    
 
 
-        
-    # #  C2
-    
-        if  (note_name(n0), n-n0) < (Das_ist_ein_C2):
-            print (mit)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.HIGH)
-             GPIO.output(in2,GPIO.LOW)
 
 
-    
-        elif (note_name(n0), n-n0) > (Das_ist_ein_C2):
-            print (gegen)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.LOW)
-             GPIO.output(in2,GPIO.HIGH)
-
-
-        else:
-            B += 1
-            print('Super das ist ein Perfektes C#')
-        
-        if B <= PerfekteNote:
-            print (note_name(n0), n-n0)
-            print(B)
-
-        else:
-            break  

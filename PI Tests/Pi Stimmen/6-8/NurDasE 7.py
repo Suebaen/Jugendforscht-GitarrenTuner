@@ -1,5 +1,4 @@
 #! /usr/bin/env python
-#########################################################
 
 import numpy as np
 import sys
@@ -9,15 +8,16 @@ import speech_recognition as s_r
 import RPi.GPIO as GPIO          
 from time import sleep
 
-def TonC():
+def TonE():
+    
+    print("Start")
 
     r = s_r.Recognizer()
-    my_mic = s_r.Microphone(device_index= 0)
+    my_mic = s_r.Microphone(device_index=1)
     print(my_mic)
 
-
-    in1 = 21
-    in2 = 12
+    in1 = 24
+    in2 = 23
     temp1=1
     
 
@@ -26,14 +26,15 @@ def TonC():
     GPIO.output(in1,GPIO.LOW)
     GPIO.output(in2,GPIO.LOW)
 
-    Das_ist_ein_C4 = ('C4.0', 0.1348820182590984)
-    Das_ist_ein_C2 = ('E4.333333333333333', -0.13667409503960215)
+
+    Das_ist_ein_E2 = ('B3.916666666666667', 0.0012108958095780054)
+    Das_ist_ein_E4 = ('E4.333333333333333 +0.01', 0.005231129721877892)
 
 
     gegen = "gegen den Uhrzeiger"
     mit= "mit dem Uhrzeiger"
     DieZeit = 1
-    PerfekteNote = 3
+    PerfekteNote = 9
     WieOftDieFlascheNoteGepsieltWerdenDamitSieEinSiganlAbgiebt = 0
 
     A = 0
@@ -116,6 +117,8 @@ def TonC():
 
     # Print initial text
     print ('sampling at', FSAMP, 'Hz with max resolution of', FREQ_STEP, 'Hz')
+    print
+
 
 
 
@@ -144,61 +147,60 @@ def TonC():
         if num_frames >= FRAMES_PER_FFT:
             print ('freq: {:9.4f} Hz     note: {:>3s} {:+.2f}'.format(
                 freq, note_name(n0), n-n0))
-
         
-    # #  C4#
-    
-        if  (note_name(n0), n-n0) < (Das_ist_ein_C4):
+    # #  E4
+        if  (note_name(n0), n-n0) < (Das_ist_ein_E4):
             print (mit)
             if(temp1==1):
              GPIO.output(in1,GPIO.HIGH)
              GPIO.output(in2,GPIO.LOW)
 
+            
+        elif (note_name(n0), n-n0) > (Das_ist_ein_E4):
+            print (gegen)
+            if(temp1==1):
+             GPIO.output(in1,GPIO.LOW)
+             GPIO.output(in2,GPIO.HIGH)
+        else:
+            A += 1
+            print('Super das ist ein Perfektes A')
+            print(E)
 
-    
-        elif (note_name(n0), n-n0) > (Das_ist_ein_C4):
+        if A <= PerfekteNote:
+            print (note_name(n0), n-n0)
+            print(E)
+
+        else:
+            break     
+
+
+
+    # #  E2
+        if  (note_name(n0), n-n0) < (Das_ist_ein_E2):
+            print (mit)
+            if(temp1==1):
+             GPIO.output(in1,GPIO.HIGH)
+             GPIO.output(in2,GPIO.LOW)
+
+            
+        elif (note_name(n0), n-n0) > (Das_ist_ein_E2):
             print (gegen)
             if(temp1==1):
              GPIO.output(in1,GPIO.LOW)
              GPIO.output(in2,GPIO.HIGH)
 
         else:
-            B += 1
-            print('Super das ist ein Perfektes C#')
-        
-        if B <= PerfekteNote:
+            A += 1
+            print('Super das ist ein Perfektes A')
+            print(E)
+
+        if A <= PerfekteNote:
             print (note_name(n0), n-n0)
-            print(B)
+            print(E)
 
         else:
-            break    
+            break     
 
 
         
-    # #  C2
-    
-        if  (note_name(n0), n-n0) < (Das_ist_ein_C2):
-            print (mit)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.HIGH)
-             GPIO.output(in2,GPIO.LOW)
-
-
-    
-        elif (note_name(n0), n-n0) > (Das_ist_ein_C2):
-            print (gegen)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.LOW)
-             GPIO.output(in2,GPIO.HIGH)
-
-
-        else:
-            B += 1
-            print('Super das ist ein Perfektes C#')
-        
-        if B <= PerfekteNote:
-            print (note_name(n0), n-n0)
-            print(B)
-
-        else:
-            break  
+                
