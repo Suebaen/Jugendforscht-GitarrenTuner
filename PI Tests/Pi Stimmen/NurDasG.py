@@ -12,20 +12,20 @@ from time import sleep
 
 def TonG():
     
+    # GPIO.setmode(GPIO.BOARD)
     r = s_r.Recognizer()
-    my_mic = s_r.Microphone(device_index=1)
+    my_mic = s_r.Microphone(device_index=0)
     print(my_mic)
 
 
-    in1 = 24
-    in2 = 23
-    temp1=1
+    m1e = 26
+    m2e = 24
+    m3e = 22
     
-
-    GPIO.setup(in1,GPIO.OUT)
-    GPIO.setup(in2,GPIO.OUT)
-    GPIO.output(in1,GPIO.LOW)
-    GPIO.output(in2,GPIO.LOW)
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(m1e,GPIO.OUT)
+    GPIO.setup(m2e,GPIO.OUT)
+    GPIO.setup(m3e,GPIO.OUT)
 
 
     Das_ist_ein_G4 = ('G4.583333333333333', 0.013800740096982622)
@@ -175,16 +175,14 @@ def TonG():
     # G2
         if  (note_name(n0), n-n0) < (Das_ist_ein_G2):
             print (mit)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.HIGH)
-             GPIO.output(in2,GPIO.LOW)
+            GPIO.output(m1e,GPIO.HIGH)
+            GPIO.output(m2e,GPIO.LOW)
+            GPIO.output(m3e,GPIO.HIGH)
 
         elif (note_name(n0), n-n0) > (Das_ist_ein_G2):
             print (gegen)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.LOW)
-             GPIO.output(in2,GPIO.HIGH)
-
+            GPIO.output(m2e,GPIO.HIGH)
+            GPIO.output(m3e,GPIO.LOW)
             
         else:
             J += 1
@@ -192,6 +190,8 @@ def TonG():
 
         if J <= PerfekteNote:
             print (note_name(n0), n-n0)
+            GPIO.output(m3e,GPIO.LOW)
+            GPIO.cleanup()
         else:
             break   
     

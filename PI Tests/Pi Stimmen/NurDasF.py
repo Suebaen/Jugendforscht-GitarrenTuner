@@ -12,15 +12,14 @@ def TonF():
     my_mic = s_r.Microphone(device_index=0)
     print(my_mic)
 
-    in1 = 24
-    in2 = 23
-    temp1=1
+    m1b = 33
+    m2b = 31
+    m3b = 29
     
 
-    GPIO.setup(in1,GPIO.OUT)
-    GPIO.setup(in2,GPIO.OUT)
-    GPIO.output(in1,GPIO.LOW)
-    GPIO.output(in2,GPIO.LOW)
+    GPIO.setup(m1b,GPIO.OUT)
+    GPIO.setup(m2b,GPIO.OUT)
+    GPIO.setup(m3b,GPIO.OUT)
 
 
 
@@ -151,15 +150,14 @@ def TonF():
 
         if  (note_name(n0), n-n0) < (Das_ist_ein_F4):
             print (mit)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.HIGH)
-             GPIO.output(in2,GPIO.LOW)
+            GPIO.output(m1b,GPIO.HIGH)
+            GPIO.output(m2b,GPIO.LOW)
+            GPIO.output(m3b,GPIO.HIGH)
 
         elif (note_name(n0), n-n0) > (Das_ist_ein_F4):
             print (gegen)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.LOW)
-             GPIO.output(in2,GPIO.HIGH)
+            GPIO.output(m2b,GPIO.HIGH)
+            GPIO.output(m3b,GPIO.LOW)
            
 
         else:
@@ -168,27 +166,29 @@ def TonF():
 
         if H <= PerfekteNote:
             print (note_name(n0), n-n0)
+            GPIO.output(m3b,GPIO.LOW)
+            GPIO.cleanup()
         else:
             break    
 
     # #  F4
 
 
-        if  (note_name(n0), n-n0) < (Das_ist_ein_F2):
-            print (mit)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.HIGH)
-             GPIO.output(in2,GPIO.LOW)
+        # if  (note_name(n0), n-n0) < (Das_ist_ein_F2):
+        #     print (mit)
+        #     if(temp1==1):
+        #      GPIO.output(in1,GPIO.HIGH)
+        #      GPIO.output(in2,GPIO.LOW)
 
-        elif (note_name(n0), n-n0) > (Das_ist_ein_F2):
-            print (gegen)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.LOW)
-             GPIO.output(in2,GPIO.HIGH)
+        # elif (note_name(n0), n-n0) > (Das_ist_ein_F2):
+        #     print (gegen)
+        #     if(temp1==1):
+        #      GPIO.output(in1,GPIO.LOW)
+        #      GPIO.output(in2,GPIO.HIGH)
 
-        else:
-            H += 1
-            print('Super das ist ein Perfektes F')
+        # else:
+        #     H += 1
+        #     print('Super das ist ein Perfektes F')
 
         if H <= PerfekteNote:
             print (note_name(n0), n-n0)

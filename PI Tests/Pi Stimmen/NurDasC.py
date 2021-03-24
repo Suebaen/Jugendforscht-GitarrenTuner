@@ -14,17 +14,17 @@ def TonC():
     r = s_r.Recognizer()
     my_mic = s_r.Microphone(device_index= 0)
     print(my_mic)
+    GPIO.setmode(GPIO.BOARD)
 
 
-    in1 = 21
-    in2 = 12
-    temp1=1
+    m1a = 23
+    m2a = 21
+    m3a = 19
     
 
-    GPIO.setup(in1,GPIO.OUT)
-    GPIO.setup(in2,GPIO.OUT)
-    GPIO.output(in1,GPIO.LOW)
-    GPIO.output(in2,GPIO.LOW)
+    GPIO.setup(m1a,GPIO.OUT)
+    GPIO.setup(m2a,GPIO.OUT)
+    GPIO.setup(m3a,GPIO.OUT)
 
     Das_ist_ein_C4 = ('C4.0', 0.1348820182590984)
     Das_ist_ein_C2 = ('E4.333333333333333', -0.13667409503960215)
@@ -150,51 +150,52 @@ def TonC():
     
         if  (note_name(n0), n-n0) < (Das_ist_ein_C4):
             print (mit)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.HIGH)
-             GPIO.output(in2,GPIO.LOW)
+            GPIO.output(m1a,GPIO.HIGH)
+            GPIO.output(m2a,GPIO.LOW)
+            GPIO.output(m3a,GPIO.HIGH)
 
 
     
         elif (note_name(n0), n-n0) > (Das_ist_ein_C4):
             print (gegen)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.LOW)
-             GPIO.output(in2,GPIO.HIGH)
+            GPIO.output(m2a,GPIO.HIGH)
+            GPIO.output(m3a,GPIO.LOW)
 
         else:
             B += 1
             print('Super das ist ein Perfektes C#')
-        
+            
         if B <= PerfekteNote:
             print (note_name(n0), n-n0)
             print(B)
+            GPIO.output(m3a,GPIO.LOW)
+            GPIO.cleanup()
 
         else:
             break    
 
 
         
-    # #  C2
+    # # #  C2
     
-        if  (note_name(n0), n-n0) < (Das_ist_ein_C2):
-            print (mit)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.HIGH)
-             GPIO.output(in2,GPIO.LOW)
+    #     if  (note_name(n0), n-n0) < (Das_ist_ein_C2):
+    #         print (mit)
+    #         if(temp1==1):
+    #          GPIO.output(in1,GPIO.HIGH)
+    #          GPIO.output(in2,GPIO.LOW)
 
 
     
-        elif (note_name(n0), n-n0) > (Das_ist_ein_C2):
-            print (gegen)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.LOW)
-             GPIO.output(in2,GPIO.HIGH)
+    #     elif (note_name(n0), n-n0) > (Das_ist_ein_C2):
+    #         print (gegen)
+    #         if(temp1==1):
+    #          GPIO.output(in1,GPIO.LOW)
+    #          GPIO.output(in2,GPIO.HIGH)
 
 
-        else:
-            B += 1
-            print('Super das ist ein Perfektes C#')
+    #     else:
+    #         B += 1
+    #         print('Super das ist ein Perfektes C#')
         
         if B <= PerfekteNote:
             print (note_name(n0), n-n0)

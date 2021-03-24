@@ -11,20 +11,20 @@ from time import sleep
 def TonE():
     
     print("Start")
-
+    
     r = s_r.Recognizer()
     my_mic = s_r.Microphone(device_index=1)
     print(my_mic)
+    GPIO.setmode(GPIO.BOARD)
 
-    in1 = 24
-    in2 = 23
-    temp1=1
+    m1c = 40
+    m2c = 37
+    m3c = 35
     
 
-    GPIO.setup(in1,GPIO.OUT)
-    GPIO.setup(in2,GPIO.OUT)
-    GPIO.output(in1,GPIO.LOW)
-    GPIO.output(in2,GPIO.LOW)
+    GPIO.setup(m1c,GPIO.OUT)
+    GPIO.setup(m2c,GPIO.OUT)
+    GPIO.setup(m3c,GPIO.OUT)
 
 
     Das_ist_ein_E2 = ('B3.916666666666667', 0.0012108958095780054)
@@ -151,16 +151,17 @@ def TonE():
     # #  E4
         if  (note_name(n0), n-n0) < (Das_ist_ein_E4):
             print (mit)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.HIGH)
-             GPIO.output(in2,GPIO.LOW)
+            
+            GPIO.output(m1c,GPIO.HIGH)
+            GPIO.output(m2c,GPIO.LOW)
+            GPIO.output(m3c,GPIO.HIGH)
 
             
         elif (note_name(n0), n-n0) > (Das_ist_ein_E4):
             print (gegen)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.LOW)
-             GPIO.output(in2,GPIO.HIGH)
+            GPIO.output(m2c,GPIO.HIGH)
+            GPIO.output(m3c,GPIO.LOW)
+            
         else:
             A += 1
             print('Super das ist ein Perfektes A')
@@ -169,30 +170,32 @@ def TonE():
         if A <= PerfekteNote:
             print (note_name(n0), n-n0)
             print(E)
+            GPIO.output(m3c,GPIO.LOW)
+            GPIO.cleanup()
 
         else:
             break     
 
 
 
-    # #  E2
-        if  (note_name(n0), n-n0) < (Das_ist_ein_E2):
-            print (mit)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.HIGH)
-             GPIO.output(in2,GPIO.LOW)
+    # # #  E2
+    #     if  (note_name(n0), n-n0) < (Das_ist_ein_E2):
+    #         print (mit)
+    #         if(temp1==1):
+    #          GPIO.output(in1,GPIO.HIGH)
+    #          GPIO.output(in2,GPIO.LOW)
 
             
-        elif (note_name(n0), n-n0) > (Das_ist_ein_E2):
-            print (gegen)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.LOW)
-             GPIO.output(in2,GPIO.HIGH)
+    #     elif (note_name(n0), n-n0) > (Das_ist_ein_E2):
+    #         print (gegen)
+    #         if(temp1==1):
+    #          GPIO.output(in1,GPIO.LOW)
+    #          GPIO.output(in2,GPIO.HIGH)
 
-        else:
-            A += 1
-            print('Super das ist ein Perfektes A')
-            print(E)
+    #     else:
+    #         A += 1
+    #         print('Super das ist ein Perfektes A')
+    #         print(E)
 
         if A <= PerfekteNote:
             print (note_name(n0), n-n0)

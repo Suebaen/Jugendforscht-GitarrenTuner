@@ -11,26 +11,22 @@ from time import sleep
 
 
 def TonA4():
-
+ 
     r = s_r.Recognizer()
-    my_mic = s_r.Microphone(device_index=0)# in die Klammer (device_index=0)
+    my_mic = s_r.Microphone(device_index=1)# in die Klammer (device_index=0)
     print(my_mic)
 
 
 
 
-    in1 = 16
-    in2 = 18
-    en = 25
-    temp1=1
 
-    # GPIO.setmode(GPIO.BCM)
-    GPIO.setup(in1,GPIO.OUT)
-    GPIO.setup(in2,GPIO.OUT)
-    # GPIO.setup(en,GPIO.OUT)
-    GPIO.output(in1,GPIO.LOW)
-    GPIO.output(in2,GPIO.LOW)
-    # p=GPIO.PWM(en,1000)
+    m1 = 7
+    m2 = 5
+    m3 = 3
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(m1,GPIO.OUT)
+    GPIO.setup(m2,GPIO.OUT)
+    GPIO.setup(m3,GPIO.OUT)
 
     Das_ist_ein_A4 = ('A4.75', -0.021530851746419444)
     
@@ -40,7 +36,7 @@ def TonA4():
     gegen = "gegen den Uhrzeiger"
     mit= "mit dem Uhrzeiger"
     DieZeit = 1
-    PerfekteNote = 3
+    PerfekteNote = 1
     WieOftDieFlascheNoteGepsieltWerdenDamitSieEinSiganlAbgiebt = 0
 
     A = 0
@@ -118,9 +114,13 @@ def TonA4():
     window = 0.5 * (1 - np.cos(np.linspace(0, 2*np.pi, SAMPLES_PER_FFT, False)))
     print ('sampling at', FSAMP, 'Hz with max resolution of', FREQ_STEP, 'Hz')
 
-
+ 
 
     while stream.is_active():
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(m1,GPIO.OUT)
+        GPIO.setup(m2,GPIO.OUT)
+        GPIO.setup(m3,GPIO.OUT)
 
 
         buf[:-FRAME_SIZE] = buf[FRAME_SIZE:]
@@ -149,8 +149,10 @@ def TonA4():
     #  A4  
 
         if  (note_name(n0), n-n0) < (Das_ist_ein_A4):
-            GPIO.output(in1,GPIO.LOW)
-            GPIO.output(in2,GPIO.HIGH)
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.output(m1,GPIO.HIGH)
+            GPIO.output(m2,GPIO.LOW)
+            GPIO.output(m3,GPIO.HIGH)
             print("backward")
             print (mit)
             
@@ -158,30 +160,37 @@ def TonA4():
 
             
         elif (note_name(n0), n-n0) > (Das_ist_ein_A4):
+            GPIO.setmode(GPIO.BOARD)
             print (gegen)
-            if(temp1==1):
-             GPIO.output(in1,GPIO.HIGH)
-             GPIO.output(in2,GPIO.LOW)
+            GPIO.output(m2,GPIO.HIGH)
+            GPIO.output(m3,GPIO.LOW)
             print(A)
+
+         
 
         else:
             A += 1
-            if(temp1==1):
-             GPIO.output(in1,GPIO.LOW)
-             GPIO.output(in2,GPIO.LOW)
-             GPIO.cleanup()
             print('Super das ist ein Perfektes A')
             # Stimmen()
             print(A)
 
         if A <= PerfekteNote:
             print (note_name(n0), n-n0)
-            
+            GPIO.setmode(GPIO.BOARD)
             print(A)
+            GPIO.output(m3,GPIO.LOW)
+            GPIO.cleanup()
 
+        elif (KeyboardInterrupt):
+            GPIO.output(m3,GPIO.LOW)
+            print('Es hat geklappt')
+            GPIO.cleanup()
+            break   
+        
         else:
-            break    
+            break
 
-
-
-
+        
+        
+        
+        
